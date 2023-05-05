@@ -35,8 +35,7 @@ public class SubscriptionController {
         //Incase you are already an ELITE member throw an Exception
         //and at the end return the difference in fare that you need to pay to get this subscription done.
         try{
-            int ans= subscriptionService.upgradeSubscription(userId);
-            return ans;
+            return subscriptionService.upgradeSubscription(userId);
         }catch (Exception e){
             return -1;
         }
@@ -46,8 +45,8 @@ public class SubscriptionController {
     public Integer getTotalRevenue(){
 
         //Calculate the total Revenue of hot-star from all the Users combined...
-        int ans= subscriptionService.calculateTotalRevenueOfHotstar();
-        return ans;
+        return subscriptionService.calculateTotalRevenueOfHotstar();
+
 
     }
 

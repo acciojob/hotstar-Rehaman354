@@ -29,7 +29,7 @@ public class SubscriptionService {
         User user=userRepository.findById(userId).get();
         Subscription subscription=new Subscription();
         subscription.setSubscriptionType(subscriptionEntryDto.getSubscriptionType());
-//        subscription.setStartSubscriptionDate(new Date());
+        subscription.setStartSubscriptionDate(new Date());
         subscription.setNoOfScreensSubscribed(subscriptionEntryDto.getNoOfScreensRequired());
         //setting amountPaid
         int amount=0;
@@ -48,7 +48,7 @@ public class SubscriptionService {
         subscription.setTotalAmountPaid(amount);
         subscription.setUser(user);
         user.setSubscription(subscription);
-        userRepository.save(user);
+        userRepository.save(user);//subscription also gets saved
         return amount;
     }
 

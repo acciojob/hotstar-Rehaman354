@@ -60,7 +60,8 @@ public class SubscriptionService {
         User user = userRepository.findById(userId).get();
         Subscription subscription=user.getSubscription();
        if(subscription.getSubscriptionType().equals(SubscriptionType.ELITE)) {
-           throw new Exception("Already the best Subscription");
+//           throw new Exception("Already the best Subscription");
+           return null;
        }
        else if(subscription.getSubscriptionType().equals(SubscriptionType.PRO))
        {

@@ -32,7 +32,7 @@ public class SubscriptionService {
         subscription.setStartSubscriptionDate(new Date());
         subscription.setNoOfScreensSubscribed(subscriptionEntryDto.getNoOfScreensRequired());
         //setting amountPaid
-        int amount=0;
+        int amount;
         if(subscriptionEntryDto.getSubscriptionType().equals(SubscriptionType.BASIC))
         {
             amount=500+(200*subscriptionEntryDto.getNoOfScreensRequired());
@@ -41,7 +41,7 @@ public class SubscriptionService {
         {
             amount=800+(250*subscriptionEntryDto.getNoOfScreensRequired());
         }
-        else if(subscriptionEntryDto.getSubscriptionType().equals(SubscriptionType.ELITE))
+        else
         {
             amount=1000+(350* subscriptionEntryDto.getNoOfScreensRequired());
         }
@@ -57,7 +57,7 @@ public class SubscriptionService {
         //If you are already at an ElITE subscription : then throw Exception ("Already the best Subscription")
         //In all other cases just try to upgrade the subscription and tell the difference of price that user has to pay
         //update the subscription in the repository
-       User user= userRepository.findById(userId).get();
+        User user = userRepository.findById(userId).get();
         int diffAmount;
        if(user.getSubscription().getSubscriptionType().equals(SubscriptionType.ELITE))
            throw new Exception("Already the best Subscription");
@@ -97,7 +97,7 @@ public class SubscriptionService {
         //Hint is to use findAll function from the SubscriptionDb
        int ans = 0;
        for(Subscription s: subscriptionRepository.findAll()){
-           ans+=12*s.getTotalAmountPaid();
+           ans+=s.getTotalAmountPaid();
        }
         return ans;
     }

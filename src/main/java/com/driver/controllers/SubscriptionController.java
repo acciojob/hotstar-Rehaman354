@@ -34,8 +34,10 @@ public class SubscriptionController {
         //ie if You are A BASIC subscriber update to PRO and if You are a PRO upgrade to ELITE.
         //Incase you are already an ELITE member throw an Exception
         //and at the end return the difference in fare that you need to pay to get this subscription done.
+
         try{
-            return subscriptionService.upgradeSubscription(userId);
+            int ans=subscriptionService.upgradeSubscription(userId);
+            return ans;
         }catch (Exception e){
             return -1;
         }

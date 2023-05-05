@@ -60,10 +60,10 @@ public class SubscriptionService {
        User user= userRepository.findById(userId).get();
        if(user.getSubscription().getSubscriptionType()==SubscriptionType.ELITE)
            throw new Exception("Already the best Subscription");
-       int diffAmount=0;
+       int diffAmount;
        if(user.getSubscription().getSubscriptionType()==SubscriptionType.PRO)
        {
-           int cuurentAmount=user.getSubscription().getTotalAmountPaid();
+           int currentAmount=user.getSubscription().getTotalAmountPaid();
            Subscription subscription=user.getSubscription();
            subscription.setSubscriptionType(SubscriptionType.ELITE);
            subscription.setStartSubscriptionDate(new Date());
@@ -72,10 +72,10 @@ public class SubscriptionService {
            Subscription s=subscriptionRepository.save(subscription);
            user.setSubscription(s);
            userRepository.save(user);
-           diffAmount=newAmount-cuurentAmount;
+           diffAmount=newAmount-currentAmount;
        }
        else {
-           int cuurentAmount=user.getSubscription().getTotalAmountPaid();
+           int currentAmount=user.getSubscription().getTotalAmountPaid();
            Subscription subscription=user.getSubscription();
            subscription.setSubscriptionType(SubscriptionType.PRO);
            subscription.setStartSubscriptionDate(new Date());
@@ -84,7 +84,7 @@ public class SubscriptionService {
            Subscription s=subscriptionRepository.save(subscription);
            user.setSubscription(s);
            userRepository.save(user);
-           diffAmount=newAmount-cuurentAmount;
+           diffAmount=newAmount-currentAmount;
 
        }
         return diffAmount;
@@ -94,7 +94,7 @@ public class SubscriptionService {
 
         //We need to find out total Revenue of hotstar : from all the subscriptions combined
         //Hint is to use findAll function from the SubscriptionDb
-       Integer ans=0;
+       int ans = 0;
        for(Subscription s: subscriptionRepository.findAll()){
            ans+=s.getTotalAmountPaid();
        }

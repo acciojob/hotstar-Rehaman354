@@ -90,16 +90,17 @@ public class SubscriptionService {
         return diffAmount;
     }
 
-    @SuppressWarnings("ReassignedVariable")
+
     public Integer calculateTotalRevenueOfHotstar(){
 
         //We need to find out total Revenue of hotstar : from all the subscriptions combined
         //Hint is to use findAll function from the SubscriptionDb
-       int ans = 0;
-       for(Subscription s: subscriptionRepository.findAll()){
-           ans+=s.getTotalAmountPaid();
-       }
-        return ans;
+      int ans=0;
+      for(User user: userRepository.findAll()){
+          if(user.getSubscription()!=null)
+         ans+=user.getSubscription().getTotalAmountPaid();
+      }
+      return ans;
     }
 
 }

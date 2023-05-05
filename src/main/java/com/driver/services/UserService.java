@@ -29,8 +29,6 @@ public class UserService {
 
         //Jut simply add the user to the Db and return the userId returned by the repository
         User savedUser=userRepository.save(user);
-        Subscription s=user.getSubscription();
-        subscriptionRepository.save(s);
         return savedUser.getId();
     }
 

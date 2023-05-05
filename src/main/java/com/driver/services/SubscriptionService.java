@@ -29,10 +29,10 @@ public class SubscriptionService {
         User user=userRepository.findById(userId).get();
         Subscription subscription=new Subscription();
         subscription.setSubscriptionType(subscriptionEntryDto.getSubscriptionType());
-        subscription.setStartSubscriptionDate(new Date());
+//        subscription.setStartSubscriptionDate(new Date());
         subscription.setNoOfScreensSubscribed(subscriptionEntryDto.getNoOfScreensRequired());
         //setting amountPaid
-        int amount;
+        int amount=0;
         if(subscriptionEntryDto.getSubscriptionType().equals(SubscriptionType.BASIC))
         {
             amount=500+(200*subscriptionEntryDto.getNoOfScreensRequired());
@@ -47,8 +47,8 @@ public class SubscriptionService {
         }
         subscription.setTotalAmountPaid(amount);
         subscription.setUser(user);
-        Subscription s=subscriptionRepository.save(subscription);
-        user.setSubscription(s);
+        user.setSubscription(subscription);
+        userRepository.save(user);
         return amount;
     }
 
@@ -59,9 +59,9 @@ public class SubscriptionService {
         //update the subscription in the repository
         User user = userRepository.findById(userId).get();
         Subscription subscription=user.getSubscription();
-       if(subscription.getSubscriptionType()==SubscriptionType.ELITE)
+       if(subscription.getSubscriptionType().equals(SubscriptionType.ELITE))
            throw new Exception("Already the best Subscription");
-       else if(subscription.getSubscriptionType()==SubscriptionType.PRO)
+       else if(subscription.getSubscriptionType().equals(SubscriptionType.PRO))
        {
            int currentAmount=subscription.getTotalAmountPaid();
            subscription.setSubscriptionType(SubscriptionType.ELITE);

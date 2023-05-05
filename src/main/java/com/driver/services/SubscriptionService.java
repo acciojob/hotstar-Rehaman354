@@ -58,14 +58,12 @@ public class SubscriptionService {
         //In all other cases just try to upgrade the subscription and tell the difference of price that user has to pay
         //update the subscription in the repository
         User user = userRepository.findById(userId).get();
-        int diffAmount=0;
-        if(user.getSubscription()==null) return -1;
-       if(user.getSubscription().getSubscriptionType().equals(SubscriptionType.ELITE))
+        Subscription subscription=user.getSubscription();
+       if(subscription.getSubscriptionType()==SubscriptionType.ELITE)
            throw new Exception("Already the best Subscription");
-       else if(user.getSubscription().getSubscriptionType().equals(SubscriptionType.PRO))
+       else if(subscription.getSubscriptionType()==SubscriptionType.PRO)
        {
-           int currentAmount=user.getSubscription().getTotalAmountPaid();
-           Subscription subscription=user.getSubscription();
+           int currentAmount=subscription.getTotalAmountPaid();
            subscription.setSubscriptionType(SubscriptionType.ELITE);
            subscription.setStartSubscriptionDate(new Date());
            int newAmount= 1000+(350*subscription.getNoOfScreensSubscribed());
@@ -73,11 +71,10 @@ public class SubscriptionService {
            Subscription s=subscriptionRepository.save(subscription);
            user.setSubscription(s);
            userRepository.save(user);
-           diffAmount=newAmount-currentAmount;
+           return  newAmount-currentAmount;
        }
        else {
-           int currentAmount=user.getSubscription().getTotalAmountPaid();
-           Subscription subscription=user.getSubscription();
+           int currentAmount=subscription.getTotalAmountPaid();
            subscription.setSubscriptionType(SubscriptionType.PRO);
            subscription.setStartSubscriptionDate(new Date());
            int newAmount= 800+(250*subscription.getNoOfScreensSubscribed());
@@ -85,10 +82,8 @@ public class SubscriptionService {
            Subscription s=subscriptionRepository.save(subscription);
            user.setSubscription(s);
            userRepository.save(user);
-           diffAmount=newAmount-currentAmount;
-
+           return newAmount-currentAmount;
        }
-        return diffAmount;
     }
 
 

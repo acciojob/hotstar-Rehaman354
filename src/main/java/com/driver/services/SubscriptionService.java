@@ -57,14 +57,9 @@ public class SubscriptionService {
         //If you are already at an ElITE subscription : then throw Exception ("Already the best Subscription")
         //In all other cases just try to upgrade the subscription and tell the difference of price that user has to pay
         //update the subscription in the repository
-        User user;
-        try {
-            user = userRepository.findById(userId).get();
-        }catch(Exception e){
-            throw new Exception("user not found");
-        }
+        User user = userRepository.findById(userId).get();
         int diffAmount=0;
-        if(user.getSubscription()==null) throw new Exception("subscription does not exist");
+        if(user.getSubscription()==null) return -1;
        if(user.getSubscription().getSubscriptionType().equals(SubscriptionType.ELITE))
            throw new Exception("Already the best Subscription");
        else if(user.getSubscription().getSubscriptionType().equals(SubscriptionType.PRO))

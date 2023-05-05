@@ -59,8 +59,9 @@ public class SubscriptionService {
         //update the subscription in the repository
         User user = userRepository.findById(userId).get();
         Subscription subscription=user.getSubscription();
-       if(subscription.getSubscriptionType().equals(SubscriptionType.ELITE))
+       if(subscription.getSubscriptionType().equals(SubscriptionType.ELITE)) {
            throw new Exception("Already the best Subscription");
+       }
        else if(subscription.getSubscriptionType().equals(SubscriptionType.PRO))
        {
            int currentAmount=subscription.getTotalAmountPaid();
